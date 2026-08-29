@@ -1,4 +1,4 @@
-N_PY, lask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import json
 import os
 import subprocess
@@ -14,7 +14,7 @@ import zipfile
 import psutil
 
 app = Flask(__name__)
-app.secret_key = 'jihad-super-secret-key-2026'
+app.secret_key = 'jihad-super-secret-key-2026'  # আপনার নাম দিন
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 
 USERS_FILE = 'users.json'
@@ -26,7 +26,7 @@ NET_STATS = {}
 os.makedirs(BOTS_DIR, exist_ok=True)
 
 # ============================================
-# রেট লিমিট
+# Rate Limiter Class
 # ============================================
 
 class RateLimiter:
@@ -36,9 +36,11 @@ class RateLimiter:
         users = load_users()
         server = None
         for uname, data in users.items():
-            if uname == 'admin': continue
+            if uname == 'admin': 
+                continue
             servers = data.get('servers', [])
-            if not isinstance(servers, list): continue
+            if not isinstance(servers, list): 
+                continue
             for s in servers:
                 if isinstance(s, dict) and s.get('server_id') == server_id:
                     server = s
